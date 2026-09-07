@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<meta name="description" content="blaq — premium streetwear built in Asaba.">
+<title>blaq — Premium Streetwear</title>
+
+<style>
+:root{
+  --black:#101010;
+  --cream:#f5f1e9;
+  --white:#fff;
+  --muted:#777;
+  --line:#dedbd3;
+  --green:#174b3d;
+  --sale:#9d1c1c;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--cream);
+  color:var(--black);
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* ANNOUNCEMENT */
+.announcement{
+  background:var(--green);
+  color:#fff;
+  text-align:center;
+  padding:10px;
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:700;
+}
+
+/* HEADER */
+header{
+  background:var(--cream);
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.nav{
+  height:82px;
+  max-width:1400px;
+  margin:auto;
+  padding:0 35px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  display:block;
+}
+
+.brand-name{
+  font-size:27px;
+  font-weight:900;
+  letter-spacing:5px;
+  text-transform:lowercase;
+}
+
+.nav-links{
+  display:flex;
+  gap:35px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.nav-links a:hover{
+  opacity:.55;
+}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  background:transparent;
+  font-size:19px;
+  border-radius:50%;
+  transition:.2s;
+}
+
+.icon-btn:hover{
+  background:#e8e4dc;
+}
+
+.cart-count{
+  position:relative;
+}
+
+.cart-count span{
+  position:absolute;
+  right:1px;
+  top:1px;
+  background:var(--black);
+  color:white;
+  border-radius:50%;
+  width:17px;
+  height:17px;
+  font-size:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.mobile-menu-btn{
+  display:none;
+}
+
+/* HERO */
+.hero{
+  min-height:650px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.76),rgba(0,0,0,.35),rgba(0,0,0,.08)),
+    radial-gradient(circle at 70% 35%,#555,#191919 55%,#050505);
+  color:white;
+}
+
+.hero-content{
+  max-width:1400px;
+  width:100%;
+  margin:auto;
+  padding:80px 35px;
+}
+
+.eyebrow{
+  font-size:12px;
+  letter-spacing:4px;
+  font-weight:bold;
+  margin-bottom:22px;
+}
+
+.hero h1{
+  font-size:clamp(55px,8vw,112px);
+  line-height:.88;
+  max-width:850px;
+  letter-spacing:-5px;
+}
+
+.hero p{
+  max-width:520px;
+  margin:28px 0;
+  color:#ddd;
+  line-height:1.7;
+  font-size:15px;
+}
+
+.btn{
+  border:1px solid var(--black);
+  background:var(--black);
+  color:white;
+  padding:15px 25px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  font-size:11px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  opacity:.88;
+}
+
+.btn.light{
+  background:white;
+  color:var(--black);
+  border-color:white;
+}
+
+.btn.outline{
+  background:transparent;
+  color:var(--black);
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-bottom:1px solid var(--line);
+}
+
+.stat{
+  padding:45px 25px;
+  text-align:center;
+  border-right:1px solid var(--line);
+}
+
+.stat:last-child{
+  border-right:0;
+}
+
+.stat strong{
+  display:block;
+  font-size:32px;
+  margin-bottom:7px;
+}
+
+.stat small{
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--muted);
+}
+
+/* SECTIONS */
+section{
+  max-width:1400px;
+  margin:auto;
+  padding:100px 35px;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-bottom:45px;
+}
+
+.section-label{
+  font-size:10px;
+  letter-spacing:3px;
+  font-weight:bold;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+.section-head h2{
+  font-size:45px;
+  letter-spacing:-2px;
+}
+
+/* STORY */
+.story{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:center;
+}
+
+.story-image{
+  min-height:480px;
+  background:
+    linear-gradient(135deg,#111,#333 45%,#777);
+  position:relative;
+  overflow:hidden;
+}
+
+.story-image:after{
+  content:"blaq";
+  position:absolute;
+  left:30px;
+  bottom:20px;
+  font-size:100px;
+  font-weight:900;
+  letter-spacing:-7px;
+  color:rgba(255,255,255,.08);
+}
+
+.story-copy h2{
+  font-size:54px;
+  line-height:.95;
+  margin-bottom:25px;
+}
+
+.story-copy p{
+  line-height:1.8;
+  color:#555;
+  margin-bottom:25px;
+}
+
+/* CATEGORIES */
+.categories{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.category{
+  min-height:360px;
+  padding:28px;
+  color:white;
+  position:relative;
+  display:flex;
+  align-items:end;
+  overflow:hidden;
+  cursor:pointer;
+  background:#222;
+}
+
+.category:nth-child(1){
+  background:linear-gradient(145deg,#161616,#555);
+}
+
+.category:nth-child(2){
+  background:linear-gradient(145deg,#063b55,#1b7b96);
+}
+
+.category:nth-child(3){
+  background:linear-gradient(145deg,#172d17,#52733c);
+}
+
+.category h3{
+  font-size:30px;
+  position:relative;
+  z-index:2;
+}
+
+.category small{
+  display:block;
+  margin-top:8px;
+  opacity:.75;
+  letter-spacing:2px;
+}
+
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.product-card{
+  background:#fff;
+  position:relative;
+}
+
+.product-image{
+  height:360px;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  background:#e8e4dc;
+}
+
+.product-image:before{
+  content:"";
+  width:70%;
+  height:78%;
+  background:linear-gradient(145deg,#111,#393939);
+  clip-path:polygon(17% 10%,83% 10%,94% 91%,6% 91%);
+  position:absolute;
+}
+
+.product-card:nth-child(2) .product-image:before{
+  background:linear-gradient(145deg,#122e35,#498a83);
+}
+
+.product-card:nth-child(3) .product-image:before{
+  background:linear-gradient(145deg,#1a1a1a,#555);
+}
+
+.product-card:nth-child(4) .product-image:before{
+  background:linear-gradient(145deg,#243b1c,#668c48);
+}
+
+.product-card:nth-child(5) .product-image:before{
+  background:linear-gradient(145deg,#074b66,#62a1b7);
+}
+
+.product-card:nth-child(6) .product-image:before{
+  width:58%;
+  height:45%;
+  border-radius:50%;
+  background:#151515;
+}
+
+.product-card:nth-child(7) .product-image:before{
+  background:linear-gradient(145deg,#101010,#252525);
+}
+
+.product-card:nth-child(8) .product-image:before{
+  background:#111;
+}
+
+.product-logo{
+  position:absolute;
+  z-index:2;
+  color:#ddd;
+  font-size:38px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.product-info{
+  padding:17px;
+}
+
+.product-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.product-name{
+  font-weight:700;
+  font-size:14px;
+}
+
+.price{
+  margin-top:9px;
+  font-size:13px;
+}
+
+.wishlist{
+  border:0;
+  background:none;
+  font-size:20px;
+}
+
+.wishlist.active{
+  color:#9d1c1c;
+}
+
+.badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:var(--sale);
+  color:white;
+  padding:7px 9px;
+  font-size:9px;
+  font-weight:bold;
+  letter-spacing:1px;
+  z-index:5;
+}
+
+.product-info .btn{
+  width:100%;
+  margin-top:15px;
+}
+
+/* NEWSLETTER */
+.newsletter{
+  background:#111;
+  color:#fff;
+  max-width:none;
+}
+
+.newsletter-inner{
+  max-width:900px;
+  margin:auto;
+  text-align:center;
+}
+
+.newsletter h2{
+  font-size:50px;
+  margin-bottom:15px;
+}
+
+.newsletter p{
+  color:#aaa;
+  margin-bottom:25px;
+}
+
+.newsletter-form{
+  display:flex;
+  max-width:600px;
+  margin:auto;
+}
+
+.newsletter-form input{
+  flex:1;
+  padding:17px;
+  border:0;
+  outline:0;
+}
+
+.newsletter-form button{
+  border:0;
+}
+
+/* FOOTER */
+footer{
+  background:#111;
+  color:white;
+  border-top:1px solid #333;
+  padding:65px 35px;
+}
+
+.footer-grid{
+  max-width:1400px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:50px;
+}
+
+.footer-brand{
+  font-size:35px;
+  font-weight:900;
+  letter-spacing:5px;
+}
+
+footer h4{
+  font-size:11px;
+  letter-spacing:2px;
+  margin-bottom:20px;
+}
+
+footer a{
+  display:block;
+  color:#aaa;
+  margin-bottom:12px;
+  font-size:12px;
+}
+
+footer a:hover{
+  color:#fff;
+}
+
+.footer-bottom{
+  max-width:1400px;
+  margin:50px auto 0;
+  padding-top:25px;
+  border-top:1px solid #333;
+  color:#777;
+  font-size:11px;
+  display:flex;
+  justify-content:space-between;
+}
+
+/* MODALS */
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.62);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:500;
+  padding:20px;
+}
+
+.modal-bg.show{
+  display:flex;
+}
+
+.modal{
+  background:var(--cream);
+  width:min(550px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:35px;
+  position:relative;
+}
+
+.modal h2{
+  font-size:32px;
+  margin-bottom:25px;
+}
+
+.close{
+  position:absolute;
+  top:15px;
+  right:18px;
+  border:0;
+  background:none;
+  font-size:25px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:1px;
+  margin-bottom:7px;
+  text-transform:uppercase;
+}
+
+.form-group input,
+.form-group select{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  background:white;
+  outline:none;
+}
+
+.modal .btn{
+  width:100%;
+  margin-top:10px;
+}
+
+.message{
+  padding:12px;
+  background:#e2eee9;
+  margin-bottom:15px;
+  display:none;
+  font-size:12px;
+}
+
+/* CART */
+.cart-list{
+  margin-bottom:20px;
+}
+
+.cart-item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  border-bottom:1px solid var(--line);
+  padding:15px 0;
+}
+
+.cart-item h4{
+  font-size:13px;
+}
+
+.cart-controls{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+}
+
+.qty{
+  width:27px;
+  height:27px;
+  border:1px solid #bbb;
+  background:white;
+}
+
+.remove{
+  border:0;
+  background:none;
+  color:#a11;
+  font-size:11px;
+}
+
+.cart-total{
+  display:flex;
+  justify-content:space-between;
+  font-weight:bold;
+  padding:15px 0;
+  font-size:17px;
+}
+
+/* MOBILE MENU */
+.mobile-drawer{
+  position:fixed;
+  inset:0;
+  background:var(--cream);
+  z-index:400;
+  display:none;
+  padding:100px 30px;
+}
+
+.mobile-drawer.show{
+  display:block;
+}
+
+.mobile-drawer a{
+  display:block;
+  font-size:28px;
+  font-weight:bold;
+  padding:17px 0;
+  border-bottom:1px solid var(--line);
+}
+
+/* INSTALL */
+.install-popup{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:310px;
+  background:#111;
+  color:#fff;
+  padding:20px;
+  z-index:300;
+  box-shadow:0 10px 40px rgba(0,0,0,.25);
+  display:none;
+}
+
+.install-popup.show{
+  display:block;
+}
+
+.install-popup strong{
+  display:block;
+  margin-bottom:7px;
+}
+
+.install-popup p{
+  color:#aaa;
+  font-size:12px;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
+.install-close{
+  position:absolute;
+  right:12px;
+  top:8px;
+  background:none;
+  border:0;
+  color:white;
+  font-size:20px;
+}
+
+/* ADMIN */
+.admin-panel{
+  display:none;
+}
+
+.admin-panel.show{
+  display:block;
+}
+
+.admin-product{
+  display:flex;
+  justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%) translateY(100px);
+  background:#111;
+  color:white;
+  padding:13px 20px;
+  font-size:12px;
+  z-index:999;
+  transition:.3s;
+}
+
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav{
+    padding:0 18px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .mobile-menu-btn{
+    display:block;
+  }
+
+  .hero{
+    min-height:600px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .stat{
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+
+  .story{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+
+  .categories{
+    grid-template-columns:1fr;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .product-image{
+    height:300px;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:600px){
+  section{
+    padding:70px 18px;
+  }
+
+  .hero-content{
+    padding:60px 20px;
+  }
+
+  .hero h1{
+    font-size:58px;
+  }
+
+  .brand img{
+    width:40px;
+    height:40px;
+  }
+
+  .brand-name{
+    font-size:21px;
+  }
+
+  .nav-actions{
+    gap:0;
+  }
+
+  .icon-btn{
+    width:37px;
+    height:37px;
+  }
+
+  .section-head{
+    display:block;
+  }
+
+  .section-head h2{
+    font-size:38px;
+  }
+
+  .products{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .product-image{
+    height:220px;
+  }
+
+  .product-info{
+    padding:12px;
+  }
+
+  .product-name{
+    font-size:12px;
+  }
+
+  .story-copy h2{
+    font-size:42px;
+  }
+
+  .newsletter h2{
+    font-size:38px;
+  }
+
+  .newsletter-form{
+    display:block;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button{
+    width:100%;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .footer-bottom{
+    display:block;
+    line-height:1.8;
+  }
+
+  .install-popup{
+    left:15px;
+    right:15px;
+    width:auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="announcement">
+  FREE DELIVERY IN ASABA • NEW SEASON NOW LIVE • BUILT FOR YOUR GENERATION
+</div>
+
+<header>
+  <nav class="nav">
+
+    <a href="#home" class="brand">
+      <img src="blaq_logo.webp" alt="blaq logo">
+      <span class="brand-name">blaq</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#shop">SHOP</a>
+      <a href="#story">OUR STORY</a>
+      <a href="#categories">COLLECTIONS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+
+    <div class="nav-actions">
+
+      <button class="icon-btn" onclick="openSearch()" title="Search">
+        ⌕
+      </button>
+
+      <button class="icon-btn" onclick="openAccount()" title="Account">
+        ♙
+      </button>
+
+      <button class="icon-btn" onclick="showNotifications()" title="Notifications">
+        ♢
+      </button>
+
+      <button class="icon-btn cart-count" onclick="openCart()" title="Shopping bag">
+        ♧
+        <span id="cartCount">0</span>
+      </button>
+
+      <button class="icon-btn mobile-menu-btn" onclick="openMobileMenu()">
+        ☰
+      </button>
+
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="eyebrow">BLAQ / NEW SEASON</div>
+
+    <h1>Rule Your Generation.</h1>
+
+    <p>
+      Premium streetwear built in Asaba for people who refuse to blend in.
+      Designed to make the wearer recognizable without needing to explain
+      who they are.
+    </p>
+
+    <button class="btn light" onclick="scrollToShop()">
+      Shop the collection
+    </button>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat">
+    <strong>1K+</strong>
+    <small>Pieces designed</small>
+  </div>
+
+  <div class="stat">
+    <strong>4.9 ★</strong>
+    <small>Customer experience</small>
+  </div>
+
+  <div class="stat">
+    <strong>48H</strong>
+    <small>Asaba delivery</small>
+  </div>
+</div>
+
+<section id="story">
+  <div class="story">
+
+    <div class="story-image"></div>
+
+    <div class="story-copy">
+      <div class="section-label">OUR STORY</div>
+
+      <h2>Built in Asaba. Worn worldwide.</h2>
+
+      <p>
+        blaq was created around one simple idea: clothing should have
+        identity. Every piece combines premium streetwear construction
+        with details that make the wearer immediately recognizable.
+      </p>
+
+      <p>
+        We don't design for everybody. We design for the person who wants
+        their clothes to say something before they even speak.
+      </p>
+
+      <button class="btn" onclick="openStory()">
+        Read our story
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<section id="categories">
+
+  <div class="section-head">
+    <div>
+      <div class="section-label">EXPLORE</div>
+      <h2>Collections</h2>
+    </div>
+  </div>
+
+  <div class="categories">
+
+    <div class="category" onclick="filterCategory('hoodies')">
+      <div>
+        <h3>HOODIES</h3>
+        <small>STATEMENT LAYERS</small>
+      </div>
+    </div>
+
+    <div class="category" onclick="filterCategory('tees')">
+      <div>
+        <h3>TEES</h3>
+        <small>EVERYDAY IDENTITY</small>
+      </div>
+    </div>
+
+    <div class="category" onclick="filterCategory('bottoms')">
+      <div>
+        <h3>BOTTOMS</h3>
+        <small>BUILT DIFFERENT</small>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="shop">
+
+  <div class="section-head">
+    <div>
+      <div class="section-label">BLAQ STORE</div>
+      <h2>Featured pieces</h2>
+    </div>
+
+    <button class="btn outline" onclick="showAllProducts()">
+      View all
+    </button>
+  </div>
+
+  <div class="products" id="productGrid"></div>
+
+</section>
+
+<section class="newsletter" id="newsletter">
+
+  <div class="newsletter-inner">
+
+    <div class="section-label">STAY CONNECTED</div>
+
+    <h2>Join the blaq generation.</h2>
+
+    <p>
+      Get new drops, collection announcements and exclusive releases first.
+    </p>
+
+    <form class="newsletter-form" onsubmit="subscribe(event)">
+      <input
+        type="email"
+        id="newsletterEmail"
+        placeholder="Your email address"
+        required
+      >
+      <button class="btn light" type="submit">
+        Subscribe
+      </button>
+    </form>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer id="contact">
+
+  <div class="footer-grid">
+
+    <div>
+      <div class="footer-brand">blaq</div>
+      <p style="color:#777;line-height:1.7;margin-top:15px;max-width:330px;">
+        Premium streetwear built in Asaba, Delta State.
+        Worn by people who refuse to blend in.
+      </p>
+    </div>
+
+    <div>
+      <h4>SHOP</h4>
+      <a href="#shop" onclick="showAllProducts()">All products</a>
+      <a href="#shop" onclick="filterCategory('hoodies')">Hoodies</a>
+      <a href="#shop" onclick="filterCategory('tees')">T-Shirts</a>
+      <a href="#shop" onclick="filterCategory('bottoms')">Bottoms</a>
+    </div>
+
+    <div>
+      <h4>HELP</h4>
+      <a href="#" onclick="openShipping();return false;">Shipping</a>
+      <a href="#" onclick="openReturns();return false;">Returns</a>
+      <a href="#" onclick="openContact();return false;">Contact</a>
+      <a href="#" onclick="openFAQ();return false;">FAQ</a>
+    </div>
+
+    <div>
+      <h4>ACCOUNT</h4>
+      <a href="#" onclick="openAccount();return false;">My account</a>
+      <a href="#" onclick="openCart();return false;">Shopping bag</a>
+      <a href="#newsletter">Newsletter</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 blaq. All rights reserved.</span>
+    <span>ASABA • DELTA STATE • NIGERIA</span>
+  </div>
+
+</footer>
+
+
+<!-- SEARCH MODAL -->
+<div class="modal-bg" id="searchModal">
+
+  <div class="modal">
+
+    <button class="close" onclick="closeModal('searchModal')">×</button>
+
+    <h2>Search blaq</h2>
+
+    <div class="form-group">
+      <input
+        id="searchInput"
+        placeholder="Search products..."
+        oninput="searchProducts()"
+      >
+    </div>
+
+    <div id="searchResults"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ACCOUNT MODAL -->
+<div class="modal-bg" id="accountModal">
+
+  <div class="modal">
+
+    <button class="close" onclick="closeModal('accountModal')">×</button>
+
+    <h2>My account</h2>
+
+    <div id="accountMessage" class="message"></div>
+
+    <div class="form-group">
+      <label>Name</label>
+      <input id="accountName" placeholder="Your name">
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input id="accountEmail" type="email" placeholder="you@example.com">
+    </div>
+
+    <button class="btn" onclick="saveAccount()">
+      Save account
+    </button>
+
+    <button class="btn outline" onclick="logout()" style="margin-top:10px;">
+      Log out
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- CART MODAL -->
+<div class="modal-bg" id="cartModal">
+
+  <div class="modal">
+
+    <button class="close" onclick="closeModal('cartModal')">×</button>
+
+    <h2>Your bag</h2>
+
+    <div id="cartList"></div>
+
+    <div class="cart-total">
+      <span>Subtotal</span>
+      <span id="cartTotal">₦0</span>
+    </div>
+
+    <button class="btn" onclick="openCheckout()">
+      Checkout
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- CHECKOUT -->
+<div class="modal-bg" id="checkoutModal">
+
