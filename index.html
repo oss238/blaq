@@ -2,308 +2,834 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
-<title>blaq — streetwear</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<title>blaq — built in Lagos. worn worldwide.</title>
 
 <style>
+:root{
+  --black:#090909;
+  --cream:#f5f3ed;
+  --gold:#c9a26c;
+  --muted:#9b9b9b;
+  --line:#292929
+}
+
 *{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
-  background:#0a0a0a;
-  color:#f4f4f4;
+  background:var(--black);
+  color:#fff;
   font-family:Arial,Helvetica,sans-serif
 }
 
-button,input{font:inherit}
+button,input,select{font:inherit}
+button{cursor:pointer}
 
-.nav{
-  height:72px;
+.topbar{
+  height:44px;
+  background:#234d3e;
+  color:#fff;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:0 6%;
-  border-bottom:1px solid #222;
+  justify-content:center;
+  font-weight:700;
+  letter-spacing:.09em;
+  font-size:13px;
+  white-space:nowrap;
+  overflow:hidden
+}
+
+.header{
+  height:82px;
+  background:var(--cream);
+  color:#0b0b0b;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  padding:0 30px;
   position:sticky;
   top:0;
-  background:#0a0a0af2;
-  backdrop-filter:blur(12px);
-  z-index:5
+  z-index:50;
+  border-bottom:1px solid #ddd
 }
 
-.logo{
-  font-size:25px;
-  letter-spacing:.32em;
-  font-weight:700
-}
-
-.bag{
-  background:none;
-  border:1px solid #444;
-  color:#fff;
-  padding:10px 15px;
-  cursor:pointer
-}
-
-.hero{
-  min-height:72vh;
+.brand{
   display:flex;
   align-items:center;
-  padding:8%;
-  background:
-    radial-gradient(
-      circle at 75% 35%,
-      #292929 0,
-      #101010 32%,
-      #0a0a0a 70%
-    )
+  gap:10px;
+  min-width:170px
 }
 
-.hero h1{
-  font-size:clamp(64px,14vw,180px);
-  line-height:.8;
-  margin:0;
+.mark{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  font-size:34px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:-.2em
+}
+
+.word{
+  font-size:28px;
+  font-weight:700;
   letter-spacing:-.07em
 }
 
+.tag{
+  font-size:7px;
+  letter-spacing:.24em;
+  margin-left:4px;
+  margin-top:25px
+}
+
+.menu{
+  font-size:32px;
+  border:0;
+  background:none;
+  color:#111;
+  display:none
+}
+
+.icons{
+  margin-left:auto;
+  display:flex;
+  gap:25px;
+  align-items:center
+}
+
+.iconbtn{
+  border:0;
+  background:none;
+  font-size:27px;
+  color:#111;
+  position:relative;
+  padding:3px
+}
+
+.badge{
+  position:absolute;
+  right:-7px;
+  top:-6px;
+  background:#111;
+  color:#fff;
+  border-radius:50%;
+  font-size:9px;
+  width:17px;
+  height:17px;
+  display:grid;
+  place-items:center
+}
+
+.hero{
+  min-height:650px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      90deg,
+      #0b0b0b 0%,
+      #151515 45%,
+      #303030 100%
+    )
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      circle at 70% 45%,
+      #5b5b5b 0,
+      #282828 30%,
+      #090909 72%
+    );
+  opacity:.75
+}
+
+.hero-copy{
+  position:relative;
+  z-index:2;
+  padding:70px 7%;
+  max-width:700px
+}
+
+.eyebrow{
+  color:var(--gold);
+  letter-spacing:.3em;
+  font-weight:700;
+  font-size:14px
+}
+
+.hero h1{
+  font-size:clamp(46px,7vw,88px);
+  line-height:.95;
+  margin:18px 0
+}
+
 .hero p{
-  max-width:430px;
-  color:#aaa;
-  font-size:17px;
-  line-height:1.6;
-  margin:35px 0
+  font-size:22px;
+  color:#ddd
+}
+
+.hero-cta{
+  display:flex;
+  gap:12px;
+  margin-top:35px;
+  flex-wrap:wrap
 }
 
 .btn{
-  display:inline-block;
+  border:1px solid #fff;
+  background:#fff;
+  color:#111;
+  padding:18px 28px;
+  font-weight:700;
+  letter-spacing:.08em
+}
+
+.btn.alt{
+  background:transparent;
+  color:#fff
+}
+
+.hero-models{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:54%;
+  height:100%;
+  background:
+    linear-gradient(90deg,transparent,#0005),
+    url('a_clean_high_end_streetwear_lookbook_collage_on_a.png')
+    center/cover no-repeat;
+  mix-blend-mode:screen;
+  opacity:.72
+}
+
+.install{
+  position:fixed;
+  left:20px;
+  top:126px;
+  z-index:60;
+  background:var(--gold);
+  color:#fff;
+  padding:12px 18px;
+  border-radius:0 0 10px 10px;
+  box-shadow:0 6px 20px #0005;
   border:0;
-  background:#f4f4f4;
-  color:#080808;
-  padding:15px 25px;
-  cursor:pointer;
   font-weight:700
 }
 
-section{
-  padding:70px 6%
+.section{
+  padding:78px 5%
+}
+
+.section.cream{
+  background:var(--cream);
+  color:#111
 }
 
 .section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-bottom:30px
+  text-align:center;
+  margin-bottom:42px
+}
+
+.section-head .eyebrow{
+  display:block
 }
 
 .section-head h2{
-  font-size:32px;
-  margin:0
+  font-size:44px;
+  margin:10px 0
 }
 
-.muted{
-  color:#888
+.section-head p{
+  color:#777;
+  font-size:18px
 }
 
-.grid{
+.stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:18px
+  border-top:1px solid #ffffff33;
+  margin-top:50px
+}
+
+.stat{
+  padding:32px 12px;
+  border-right:1px solid #ffffff33
+}
+
+.stat:last-child{
+  border:0
+}
+
+.stat strong{
+  display:block;
+  font:700 40px Georgia,serif
+}
+
+.stat span{
+  color:#bbb;
+  letter-spacing:.18em;
+  font-size:12px
+}
+
+.category-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px
+}
+
+.cat{
+  height:190px;
+  border:1px solid #333;
+  display:flex;
+  align-items:end;
+  padding:22px;
+  background:linear-gradient(145deg,#1b1b1b,#080808);
+  position:relative;
+  overflow:hidden
+}
+
+.cat:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      circle at 75% 25%,
+      #5555,
+      transparent 45%
+    )
+}
+
+.cat span{
+  position:relative;
+  z-index:2;
+  font-size:21px;
+  font-weight:700
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:22px
 }
 
 .card{
   background:#111;
-  border:1px solid #242424
+  position:relative;
+  min-width:0
 }
 
-.product-img{
-  height:360px;
-  background:linear-gradient(145deg,#1c1c1c,#070707);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden
+.pic{
+  height:430px;
+  background:#eee;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  position:relative
 }
 
-.product-img img{
+.pic img{
   width:100%;
   height:100%;
   object-fit:cover
 }
 
 .placeholder{
-  font-size:70px;
-  letter-spacing:.1em;
-  color:#333;
+  font-size:55px;
+  color:#222;
+  font-weight:800;
+  letter-spacing:-.05em
+}
+
+.sale{
+  position:absolute;
+  left:16px;
+  top:16px;
+  background:#d33b30;
+  padding:11px 15px;
   font-weight:700
 }
 
+.heart{
+  position:absolute;
+  right:16px;
+  top:16px;
+  background:#fff;
+  color:#111;
+  border:0;
+  border-radius:50%;
+  width:50px;
+  height:50px;
+  font-size:26px
+}
+
+.heart.active{
+  color:#b22
+}
+
 .info{
-  padding:18px
+  padding:20px 5px
 }
 
 .info h3{
-  margin:0 0 8px;
-  font-size:18px
+  font-size:22px;
+  margin:0 0 10px
 }
 
 .price{
-  color:#bbb
+  font-size:20px;
+  font-weight:700
 }
 
-.info button{
-  margin-top:15px;
+.old{
+  color:#777;
+  text-decoration:line-through;
+  margin-left:12px;
+  font-weight:400
+}
+
+.add{
   width:100%;
-  background:#f4f4f4;
-  color:#080808;
-  border:0;
-  padding:12px;
-  cursor:pointer
-}
-
-.install{
-  position:fixed;
-  left:50%;
-  bottom:20px;
-  transform:translateX(-50%);
-  width:min(92%,460px);
-  background:#f4f4f4;
+  margin-top:16px;
+  padding:15px;
+  background:#fff;
   color:#111;
-  padding:18px 48px 18px 20px;
-  box-shadow:0 15px 50px #000;
-  z-index:20;
-  display:none
-}
-
-.install strong{
-  display:block;
-  margin-bottom:6px
-}
-
-.install small{
-  color:#555;
-  line-height:1.4
-}
-
-.install button{
-  position:absolute;
-  right:10px;
-  top:8px;
   border:0;
-  background:none;
-  font-size:24px;
-  cursor:pointer;
-  color:#111
+  font-weight:700
 }
 
-.drawer{
+.filter{
+  border:1px solid #555;
+  background:#111;
+  color:#fff;
+  padding:17px 20px;
+  width:100%;
+  font-weight:700;
+  margin-bottom:28px
+}
+
+.story{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  align-items:center
+}
+
+.story-art{
+  min-height:520px;
+  background:
+    radial-gradient(
+      circle at 45% 40%,
+      #3d3d3d,
+      #050505 62%
+    );
+  display:grid;
+  place-items:center
+}
+
+.story-mark{
+  font-size:130px;
+  font-weight:900;
+  font-style:italic;
+  transform:skew(-8deg);
+  text-shadow:0 0 2px #fff;
+  color:#111;
+  -webkit-text-stroke:2px #fff
+}
+
+.story h2{
+  font-size:clamp(42px,5vw,68px);
+  line-height:1;
+  margin:12px 0 24px
+}
+
+.story p{
+  font-size:20px;
+  line-height:1.8;
+  color:#555
+}
+
+.newsletter{
+  padding:90px 7%;
+  text-align:center;
+  background:#050505
+}
+
+.newsletter h2{
+  font-size:55px;
+  margin:0 0 20px
+}
+
+.newsletter p{
+  color:#aaa;
+  font-size:18px
+}
+
+.signup{
+  display:flex;
+  max-width:650px;
+  margin:35px auto 0
+}
+
+.signup input{
+  flex:1;
+  padding:19px;
+  background:#151515;
+  border:1px solid #444;
+  color:#fff
+}
+
+.signup button{
+  padding:0 28px;
+  background:var(--gold);
+  border:0;
+  font-weight:700
+}
+
+.footer{
+  padding:65px 5%;
+  background:#050505;
+  border-top:1px solid #222
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.5fr repeat(3,1fr);
+  gap:35px
+}
+
+.footer h4{
+  letter-spacing:.2em
+}
+
+.footer a{
+  display:block;
+  color:#999;
+  text-decoration:none;
+  margin:16px 0
+}
+
+.socials{
+  display:flex;
+  gap:10px;
+  margin-top:28px
+}
+
+.socials a{
+  width:45px;
+  height:45px;
+  border:1px solid #444;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  margin:0;
+  color:#fff
+}
+
+.copyright{
+  border-top:1px solid #222;
+  margin-top:45px;
+  padding-top:25px;
+  color:#666
+}
+
+.drawer,
+.modal{
+  display:none;
   position:fixed;
   inset:0;
-  background:#0008;
-  z-index:30;
-  display:none
+  background:#000b;
+  z-index:100
 }
 
-.drawer.open{
+.drawer.open,
+.modal.open{
   display:block
 }
 
-.cart{
+.panel{
   position:absolute;
   right:0;
   top:0;
   height:100%;
-  width:min(92%,430px);
+  width:min(94%,460px);
   background:#111;
-  padding:25px;
+  padding:28px;
   overflow:auto
 }
 
-.close{
+.modalbox{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(92%,500px);
+  background:#fff;
+  color:#111;
+  padding:30px
+}
+
+.panel .close,
+.modalbox .close{
   float:right;
   background:none;
-  color:#fff;
   border:0;
-  font-size:25px;
-  cursor:pointer
+  color:inherit;
+  font-size:30px
 }
 
-.cart h2{
-  margin-top:10px
+.cartrow{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:18px 0;
+  border-bottom:1px solid #292929
 }
 
-.cart-row{
-  border-bottom:1px solid #292929;
-  padding:16px 0
+.cartrow button{
+  background:none;
+  color:#aaa;
+  border:0
 }
 
 .total{
-  font-size:20px;
-  font-weight:bold;
+  font-size:22px;
+  font-weight:700;
   margin:25px 0
+}
+
+.form input,
+.form textarea,
+.form select{
+  width:100%;
+  padding:14px;
+  margin:8px 0 15px;
+  background:#0a0a0a;
+  border:1px solid #444;
+  color:#fff
 }
 
 .admin{
   display:none
 }
 
-.admin-box{
-  max-width:800px;
-  margin:auto;
-  background:#111;
-  padding:25px;
-  border:1px solid #292929
+.admin-list{
+  margin:25px 0
 }
 
-.admin input{
-  width:100%;
+.admin-item{
+  border-top:1px solid #333;
+  padding:15px 0;
+  display:grid;
+  grid-template-columns:1fr 110px auto;
+  gap:10px
+}
+
+.admin-item input{
   background:#080808;
   border:1px solid #333;
   color:#fff;
-  padding:12px;
-  margin:7px 0 14px
+  padding:10px
 }
 
-.admin-row{
-  display:grid;
-  grid-template-columns:2fr 1fr auto;
-  gap:10px;
-  align-items:center;
-  border-top:1px solid #292929;
-  padding:15px 0
+.notice{
+  padding:12px 15px;
+  background:#1e392f;
+  color:#d8f1e6;
+  margin:10px 0;
+  display:none
 }
 
-footer{
-  border-top:1px solid #222;
-  padding:40px 6%;
-  color:#777
-}
+@media(max-width:800px){
 
-@media(max-width:750px){
-  .grid{
-    grid-template-columns:1fr 1fr
+  .header{
+    height:72px;
+    padding:0 18px;
+    gap:12px
   }
 
-  .product-img{
-    height:270px
+  .menu{
+    display:block
+  }
+
+  .brand{
+    min-width:0
+  }
+
+  .word{
+    font-size:23px
+  }
+
+  .tag{
+    display:none
+  }
+
+  .icons{
+    gap:15px
   }
 
   .hero{
-    min-height:65vh
+    min-height:620px
   }
 
-  .admin-row{
-    grid-template-columns:1fr
+  .hero-models{
+    width:100%;
+    opacity:.35
+  }
+
+  .hero-copy{
+    padding:60px 7%
+  }
+
+  .hero p{
+    font-size:18px
+  }
+
+  .section{
+    padding:60px 5%
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr
+  }
+
+  .stat:last-child{
+    grid-column:1/-1;
+    border-top:1px solid #ffffff33
+  }
+
+  .category-strip{
+    grid-template-columns:1fr 1fr
+  }
+
+  .story{
+    grid-template-columns:1fr;
+    gap:25px
+  }
+
+  .story-art{
+    min-height:380px
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+  .install{
+    top:110px;
+    left:12px
+  }
+
+  .products{
+    gap:12px
+  }
+
+  .pic{
+    height:290px
+  }
+
+  .info h3{
+    font-size:18px
   }
 }
 
-@media(max-width:500px){
-  .grid{
+@media(max-width:520px){
+
+  .topbar{
+    font-size:11px
+  }
+
+  .icons{
+    gap:8px
+  }
+
+  .iconbtn{
+    font-size:23px
+  }
+
+  .brand .mark{
+    font-size:28px;
+    width:35px
+  }
+
+  .hero h1{
+    font-size:50px
+  }
+
+  .stats{
     grid-template-columns:1fr
   }
 
-  .product-img{
-    height:330px
+  .stat{
+    border-right:0;
+    border-bottom:1px solid #ffffff33
+  }
+
+  .stat:last-child{
+    grid-column:auto
+  }
+
+  .category-strip{
+    grid-template-columns:1fr 1fr
+  }
+
+  .cat{
+    height:150px
+  }
+
+  .products{
+    grid-template-columns:1fr 1fr
+  }
+
+  .pic{
+    height:230px
+  }
+
+  .sale{
+    font-size:11px;
+    padding:8px 9px
+  }
+
+  .heart{
+    width:40px;
+    height:40px;
+    font-size:20px
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr
+  }
+
+  .signup{
+    display:block
+  }
+
+  .signup input{
+    width:100%;
+    margin-bottom:10px;
+    padding:18px
+  }
+
+  .signup button{
+    width:100%;
+    padding:18px
+  }
+
+  .newsletter h2{
+    font-size:40px
   }
 }
 </style>
@@ -311,111 +837,438 @@ footer{
 
 <body>
 
-<header class="nav">
-  <div class="logo">blaq</div>
+<div class="topbar">
+  ✦ WELCOME TO BLAQ — BUILT IN LAGOS. WORN WORLDWIDE.
+</div>
 
-  <button class="bag" onclick="openCart()">
-    Bag (<span id="count">0</span>)
-  </button>
-</header>
+<header class="header">
 
-<main id="store">
+  <button class="menu" onclick="toggleMenu()">☰</button>
 
-<section class="hero">
-  <div>
-    <h1>blaq</h1>
+  <a class="brand" href="#" style="color:inherit;text-decoration:none">
 
-    <p>
-      Quiet confidence. Strong silhouettes.
-      A streetwear label built around distinctive pieces,
-      considered details and a dark, timeless identity.
-    </p>
+    <div class="mark">B</div>
 
-    <a class="btn" href="#shop">
-      Shop collection
-    </a>
-  </div>
-</section>
+    <div>
+      <div class="word">blaq</div>
+      <div class="tag">EST. 2026</div>
+    </div>
 
-<section id="shop">
+  </a>
 
-  <div class="section-head">
-    <h2>Latest drop</h2>
-    <span class="muted">01 / collection</span>
-  </div>
+  <nav id="mobileNav" style="display:none"></nav>
 
-  <div class="grid" id="products"></div>
+  <div class="icons">
 
-</section>
+    <button
+      class="iconbtn"
+      aria-label="Search"
+      onclick="openSearch()">
+      ⌕
+    </button>
 
-</main>
+    <button
+      class="iconbtn"
+      aria-label="Account"
+      onclick="openAccount()">
+      ♙
+    </button>
 
-<section class="admin" id="admin">
+    <button
+      class="iconbtn"
+      aria-label="Notifications"
+      onclick="alert('No new notifications.')">
+      ♟
+    </button>
 
-  <div class="admin-box">
-
-    <button class="close" onclick="closeAdmin()">×</button>
-
-    <h2>private admin</h2>
-
-    <p class="muted">
-      Prototype product and price manager.
-    </p>
-
-    <div id="adminList"></div>
-
-    <button class="btn" onclick="addProduct()">
-      + Add product
+    <button
+      class="iconbtn"
+      aria-label="Bag"
+      onclick="openCart()">
+      🛍
+      <span class="badge" id="count">0</span>
     </button>
 
   </div>
 
+</header>
+
+<button
+  class="install"
+  id="installBtn"
+  onclick="installApp()">
+  ▣ &nbsp; Get the App
+</button>
+
+
+<section class="hero">
+
+  <div class="hero-models"></div>
+
+  <div class="hero-copy">
+
+    <span class="eyebrow">NEW SEASON</span>
+
+    <h1>
+      Rule Your<br>
+      Generation.
+    </h1>
+
+    <p>
+      Premium streetwear for people who refuse to blend in.
+    </p>
+
+    <div class="hero-cta">
+
+      <button
+        class="btn"
+        onclick="document.getElementById('shop').scrollIntoView()">
+        SHOP NEW ARRIVALS
+      </button>
+
+      <button
+        class="btn alt"
+        onclick="document.getElementById('story').scrollIntoView()">
+        OUR STORY
+      </button>
+
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong>1K+</strong>
+        <span>HAPPY CUSTOMERS</span>
+      </div>
+
+      <div class="stat">
+        <strong>4.9 ★</strong>
+        <span>AVERAGE RATING</span>
+      </div>
+
+      <div class="stat">
+        <strong>48H</strong>
+        <span>LAGOS DELIVERY</span>
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
 
-<footer>
 
-  <div class="logo">blaq</div>
+<section class="section cream" id="story">
+
+  <div class="story">
+
+    <div class="story-art">
+      <div class="story-mark">B</div>
+    </div>
+
+    <div>
+
+      <span class="eyebrow">OUR STORY</span>
+
+      <h2>
+        Built in Lagos.<br>
+        Worn worldwide.
+      </h2>
+
+      <p>
+        blaq was born from a simple belief:
+        limits are meant to be challenged.
+        We make clothing for people who dream bigger,
+        move boldly and refuse to settle for ordinary.
+      </p>
+
+      <p>
+        Every collection is designed with strong silhouettes,
+        premium details and a timeless streetwear attitude.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-head">
+
+    <span class="eyebrow">
+      SHOP THE WORLD OF BLAQ
+    </span>
+
+    <h2>
+      Explore the collection
+    </h2>
+
+    <p>
+      Find your next statement piece.
+    </p>
+
+  </div>
+
+  <div class="category-strip">
+
+    <div class="cat">
+      <span>ALL PRODUCTS</span>
+    </div>
+
+    <div class="cat">
+      <span>TEES</span>
+    </div>
+
+    <div class="cat">
+      <span>HOODIES</span>
+    </div>
+
+    <div class="cat">
+      <span>JORTS & PANTS</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="shop">
+
+  <div class="section-head">
+
+    <span class="eyebrow">
+      LATEST DROP
+    </span>
+
+    <h2>
+      All Products
+    </h2>
+
+    <p>
+      Browse our complete collection.
+    </p>
+
+  </div>
+
+  <select
+    class="filter"
+    id="filter"
+    onchange="renderProducts()">
+
+    <option value="all">
+      ALL CATEGORIES
+    </option>
+
+    <option value="tops">
+      T-SHIRTS
+    </option>
+
+    <option value="hoodies">
+      HOODIES
+    </option>
+
+    <option value="bottoms">
+      JORTS & PANTS
+    </option>
+
+    <option value="caps">
+      CAPS
+    </option>
+
+  </select>
+
+  <div
+    class="products"
+    id="products">
+  </div>
+
+</section>
+
+
+<section class="newsletter">
+
+  <h2>
+    Join the
+    <em
+      style="
+        font-family:Georgia,serif;
+        color:var(--gold)
+      ">
+      blaq
+    </em>
+    Circle
+  </h2>
 
   <p>
-    © 2026 blaq. All rights reserved.
+    Early access to drops, members-only pricing
+    and styling notes from our studio.
   </p>
+
+  <form
+    class="signup"
+    onsubmit="subscribe(event)">
+
+    <input
+      id="email"
+      type="email"
+      placeholder="your@email.com"
+      required>
+
+    <button>
+      SUBSCRIBE
+    </button>
+
+  </form>
+
+  <div
+    id="subNotice"
+    style="
+      color:#c9a26c;
+      margin-top:15px
+    ">
+  </div>
+
+</section>
+
+
+<footer class="footer">
+
+  <div class="footer-grid">
+
+    <div>
+
+      <div class="word">
+        blaq
+      </div>
+
+      <p
+        style="
+          color:#999;
+          line-height:1.7
+        ">
+        Rule Your Generation.
+        Premium essentials for those
+        who refuse to blend in.
+      </p>
+
+      <div class="socials">
+
+        <a href="#">◎</a>
+        <a href="#">◉</a>
+        <a href="#">f</a>
+        <a href="#">◌</a>
+
+      </div>
+
+    </div>
+
+
+    <div>
+
+      <h4>SHOP</h4>
+
+      <a href="#shop">
+        All Products
+      </a>
+
+      <a href="#shop">
+        T-Shirts
+      </a>
+
+      <a href="#shop">
+        Hoodies
+      </a>
+
+      <a href="#shop">
+        Jorts & Pants
+      </a>
+
+      <a href="#shop">
+        Caps
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>HELP</h4>
+
+      <a href="#">
+        Size Guide
+      </a>
+
+      <a href="#">
+        FAQ
+      </a>
+
+      <a href="#">
+        Shipping
+      </a>
+
+      <a href="#">
+        Returns
+      </a>
+
+      <a href="#">
+        All Policies
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>CONTACT</h4>
+
+      <a href="mailto:hello@blaq.ng">
+        hello@blaq.ng
+      </a>
+
+      <a href="tel:+2340000000000">
+        +234 000 000 0000
+      </a>
+
+      <a href="#">
+        WhatsApp
+      </a>
+
+      <a href="#">
+        Lagos, Nigeria
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2026 blaq. All rights reserved.
+  </div>
 
 </footer>
 
-<div class="install" id="install">
 
-  <button onclick="dismissInstall()">×</button>
-
-  <strong>Install blaq</strong>
-
-  <small>
-    Add blaq to your home screen for a faster
-    app-like shopping experience.
-  </small>
-
-  <br>
-
-  <button
-    class="btn"
-    style="margin-top:12px;padding:10px 16px"
-    onclick="installApp()"
-  >
-    Install
-  </button>
-
-</div>
+<!-- SHOPPING CART -->
 
 <div
   class="drawer"
-  id="drawer"
-  onclick="if(event.target===this)closeCart()"
->
+  id="cartDrawer"
+  onclick="if(event.target===this)closeCart()">
 
-  <aside class="cart">
+  <aside class="panel">
 
-    <button class="close" onclick="closeCart()">×</button>
+    <button
+      class="close"
+      onclick="closeCart()">
+      ×
+    </button>
 
-    <h2>Your bag</h2>
+    <h2>
+      Your Bag
+    </h2>
 
     <div id="cartItems"></div>
 
@@ -426,22 +1279,176 @@ footer{
     <button
       class="btn"
       style="width:100%"
-      onclick="alert('Checkout will be connected to your payment provider in the next build.')"
-    >
-      Checkout
+      onclick="checkout()">
+      CHECKOUT
     </button>
 
   </aside>
 
 </div>
 
+
+<!-- SEARCH -->
+
+<div
+  class="modal"
+  id="searchModal"
+  onclick="if(event.target===this)closeSearch()">
+
+  <div class="modalbox">
+
+    <button
+      class="close"
+      onclick="closeSearch()">
+      ×
+    </button>
+
+    <h2>
+      Search blaq
+    </h2>
+
+    <input
+      id="searchInput"
+      style="
+        width:100%;
+        padding:15px;
+        border:1px solid #aaa
+      "
+      placeholder="Search products..."
+      oninput="searchProducts()">
+
+    <div id="searchResults"></div>
+
+  </div>
+
+</div>
+
+
+<!-- CUSTOMER ACCOUNT -->
+
+<div
+  class="modal"
+  id="accountModal"
+  onclick="if(event.target===this)closeAccount()">
+
+  <div class="modalbox">
+
+    <button
+      class="close"
+      onclick="closeAccount()">
+      ×
+    </button>
+
+    <h2>
+      blaq account
+    </h2>
+
+    <div class="form">
+
+      <input
+        id="accountEmail"
+        type="email"
+        placeholder="Email address">
+
+      <input
+        id="accountPassword"
+        type="password"
+        placeholder="Password">
+
+      <button
+        class="btn"
+        style="width:100%"
+        onclick="login()">
+        LOG IN
+      </button>
+
+      <p style="color:#777">
+        Customer login is ready for
+        secure backend connection.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- PRIVATE ADMIN -->
+
+<div
+  class="modal"
+  id="adminModal">
+
+  <div
+    class="modalbox"
+    style="
+      background:#111;
+      color:#fff
+    ">
+
+    <button
+      class="close"
+      onclick="closeAdmin()">
+      ×
+    </button>
+
+    <h2>
+      Private blaq admin
+    </h2>
+
+    <div class="form">
+
+      <input
+        id="adminPassword"
+        type="password"
+        placeholder="Admin password">
+
+      <button
+        class="btn"
+        onclick="adminLogin()">
+        ENTER ADMIN
+      </button>
+
+    </div>
+
+    <div
+      id="adminPanel"
+      style="display:none">
+
+      <div
+        class="notice"
+        id="adminNotice">
+      </div>
+
+      <div
+        class="admin-list"
+        id="adminList">
+      </div>
+
+      <button
+        class="btn"
+        onclick="addProduct()">
+        + ADD PRODUCT
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <script>
 
-const defaultProducts = [
+const defaults = [
 
   {
     name:"blaq pigeon tee",
     price:45000,
+    old:0,
+    cat:"tops",
+    sale:0,
     mark:"blaq",
     image:""
   },
@@ -449,6 +1456,9 @@ const defaultProducts = [
   {
     name:"blaq earth hoodie",
     price:85000,
+    old:99000,
+    cat:"hoodies",
+    sale:14,
     mark:"earth",
     image:""
   },
@@ -456,6 +1466,9 @@ const defaultProducts = [
   {
     name:"blaq jorts",
     price:65000,
+    old:75000,
+    cat:"bottoms",
+    sale:13,
     mark:"jorts",
     image:""
   },
@@ -463,6 +1476,9 @@ const defaultProducts = [
   {
     name:"blaq nature hoodie",
     price:85000,
+    old:99000,
+    cat:"hoodies",
+    sale:14,
     mark:"nature",
     image:""
   },
@@ -470,347 +1486,7 @@ const defaultProducts = [
   {
     name:"blaq water hoodie",
     price:85000,
-    mark:"water",
-    image:""
-  },
-
-  {
-    name:"blaq cap",
-    price:40000,
-    mark:"blaq",
-    image:""
-  }
-
-];
-
-let products =
-  JSON.parse(
-    localStorage.getItem("blaqProducts") || "null"
-  ) || defaultProducts;
-
-let cart =
-  JSON.parse(
-    localStorage.getItem("blaqCart") || "[]"
-  );
-
-function money(n){
-
-  return n.toLocaleString("en-NG");
-
-}
-
-function render(){
-
-  document.getElementById("products").innerHTML =
-    products.map((p,i) => `
-
-      <article class="card">
-
-        <div class="product-img">
-
-          ${
-            p.image
-              ? `<img src="${p.image}" alt="${p.name}">`
-              : `<div class="placeholder">${p.mark}</div>`
-          }
-
-        </div>
-
-        <div class="info">
-
-          <h3>${p.name}</h3>
-
-          <div class="price">
-            ₦${money(p.price)}
-          </div>
-
-          <button onclick="addToCart(${i})">
-            Add to bag
-          </button>
-
-        </div>
-
-      </article>
-
-    `).join("");
-
-  renderCart();
-  renderAdmin();
-
-}
-
-function addToCart(i){
-
-  cart.push(products[i]);
-
-  save();
-
-  renderCart();
-
-  openCart();
-
-}
-
-function renderCart(){
-
-  document.getElementById("count").textContent =
-    cart.length;
-
-  document.getElementById("cartItems").innerHTML =
-
-    cart.length
-
-      ? cart.map((p,i) => `
-
-          <div class="cart-row">
-
-            <strong>${p.name}</strong>
-
-            <br>
-
-            <span class="muted">
-              ₦${money(p.price)}
-            </span>
-
-            <button
-              style="
-                float:right;
-                background:none;
-                border:0;
-                color:#aaa
-              "
-              onclick="removeCart(${i})"
-            >
-              Remove
-            </button>
-
-          </div>
-
-        `).join("")
-
-      : "<p class='muted'>Your bag is empty.</p>";
-
-  document.getElementById("total").textContent =
-    money(
-      cart.reduce(
-        (s,p) => s + p.price,
-        0
-      )
-    );
-
-}
-
-function removeCart(i){
-
-  cart.splice(i,1);
-
-  save();
-
-  renderCart();
-
-}
-
-function save(){
-
-  localStorage.setItem(
-    "blaqProducts",
-    JSON.stringify(products)
-  );
-
-  localStorage.setItem(
-    "blaqCart",
-    JSON.stringify(cart)
-  );
-
-}
-
-function openCart(){
-
-  document
-    .getElementById("drawer")
-    .classList.add("open");
-
-}
-
-function closeCart(){
-
-  document
-    .getElementById("drawer")
-    .classList.remove("open");
-
-}
-
-function renderAdmin(){
-
-  document.getElementById("adminList").innerHTML =
-
-    products.map((p,i) => `
-
-      <div class="admin-row">
-
-        <input
-          value="${p.name}"
-          onchange="
-            products[${i}].name=this.value;
-            save();
-            render()
-          "
-        >
-
-        <input
-          type="number"
-          value="${p.price}"
-          onchange="
-            products[${i}].price=Number(this.value);
-            save();
-            render()
-          "
-        >
-
-        <button
-          class="btn"
-          onclick="
-            products.splice(${i},1);
-            save();
-            render()
-          "
-        >
-          Delete
-        </button>
-
-      </div>
-
-    `).join("");
-
-}
-
-function addProduct(){
-
-  products.push({
-
-    name:"new blaq product",
-
-    price:0,
-
-    mark:"blaq",
-
-    image:""
-
-  });
-
-  save();
-
-  render();
-
-}
-
-function closeAdmin(){
-
-  document.getElementById("admin")
-    .style.display="none";
-
-  document.getElementById("store")
-    .style.display="block";
-
-}
-
-function adminLogin(){
-
-  let p =
-    prompt("Private admin password");
-
-  if(p === "blaq-admin"){
-
-    document.getElementById("store")
-      .style.display="none";
-
-    document.getElementById("admin")
-      .style.display="block";
-
-  }else{
-
-    alert("Access denied");
-
-  }
-
-}
-
-let deferred;
-
-window.addEventListener(
-  "beforeinstallprompt",
-  e => {
-
-    e.preventDefault();
-
-    deferred=e;
-
-    if(
-      localStorage.getItem(
-        "blaqInstallDismissed"
-      ) !== "1"
-    ){
-
-      document.getElementById("install")
-        .style.display="block";
-
-    }
-
-  }
-);
-
-function dismissInstall(){
-
-  localStorage.setItem(
-    "blaqInstallDismissed",
-    "1"
-  );
-
-  document.getElementById("install")
-    .style.display="none";
-
-}
-
-async function installApp(){
-
-  if(deferred){
-
-    deferred.prompt();
-
-    await deferred.userChoice;
-
-    deferred=null;
-
-  }else{
-
-    alert(
-      "On iPhone: tap Share in Safari, then Add to Home Screen."
-    );
-
-  }
-
-}
-
-render();
-
-window.addEventListener(
-  "keydown",
-  e => {
-
-    if(
-      e.ctrlKey &&
-      e.shiftKey &&
-      e.key.toUpperCase() === "A"
-    ){
-
-      adminLogin();
-
-    }
-
-  }
-);
-
-</script>
-
-</body>
-</html>
+    old:99000,
+    cat:"hoodies",
+    sale:14,
+    mark:"w
