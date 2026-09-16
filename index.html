@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0b">
+<title>BLAQ — Rule Your Generation</title>
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwYzBjMGMiLz48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjM5YTZhIiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNMzIgOCBMMzYgMjggTDU2IDMyIEwzNiAzNiBMMzIgNTYgTDI4IDM2IEw4IDMyIEwyOCAyOCBaIiBmaWxsPSIjZjFlZWU3Ii8+PC9zdmc+Cg==">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@200..900&family=Unbounded:wght@300..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0c0c0c;
+  --color-paper: #f1eee7;
+  --color-line: #d6d0c5;
+  --color-moss: #174b3d;
+  --color-sage: #8eb7b0;
+  --color-gold: #b39a6a;
+  --color-cream: #e9e4da;
+  --font-display: "Unbounded", sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Space Grotesk", Arial, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection { background: #174b3d; color: #f1eee7; }
+
+/* ---------- keyframes ---------- */
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+@keyframes spinRev { to { transform: rotate(-360deg); } }
+@keyframes drift { from { transform: scale(1.02) translate(0,0); } to { transform: scale(1.14) translate(-3%, -2%); } }
+@keyframes floatY { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-26px) rotate(3deg); } }
+@keyframes pulseGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(179,154,106,.45); } 60% { box-shadow: 0 0 44px 6px rgba(179,154,106,.28); } }
+@keyframes grainShift { 0%,100% { transform: translate(0,0); } 25% { transform: translate(-3%,2%); } 50% { transform: translate(2%,-3%); } 75% { transform: translate(-2%,-2%); } }
+@keyframes aurora { 0%,100% { transform: translate(0,0) rotate(0deg) scale(1); filter: hue-rotate(0deg); } 33% { transform: translate(40px,-50px) rotate(18deg) scale(1.18); filter: hue-rotate(24deg); } 66% { transform: translate(-30px,30px) rotate(-12deg) scale(.94); filter: hue-rotate(-18deg); } }
+@keyframes shine { to { background-position: -200% center; } }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+.marquee-track { display: flex; width: max-content; animation: marquee 26s linear infinite; }
+.marquee-rev { animation-direction: reverse; }
+
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 60;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: .07;
+  animation: grainShift 7s steps(6) infinite;
+}
+
+.glass { backdrop-filter: blur(20px); background: rgba(241,238,231,.82); }
+.glass-dark { backdrop-filter: blur(20px); background: rgba(12,12,12,.72); }
+
+.tilt-scene { perspective: 1100px; }
+.tilt-card { transform-style: preserve-3d; will-change: transform; transition: transform .12s ease-out; }
+
+.gold-shine {
+  background: linear-gradient(110deg, #b39a6a 20%, #f4e3bb 40%, #b39a6a 60%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 5s linear infinite;
+}
+
+.ring-spin { animation: spinSlow 18s linear infinite; }
+.ring-spin-rev { animation: spinRev 30s linear infinite; }
+.bob { animation: bob 5s ease-in-out infinite; }
+
+.aurora-blob { animation: aurora 12s ease-in-out infinite; will-change: transform, filter; }
+/* BLAQ living constellation: stars move independently and connected lines continuously morph. */
+.blaq-constellation{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.62;overflow:visible}
+.blaq-constellation .c-line{stroke:#b39a6a;stroke-width:1;stroke-opacity:.34;vector-effect:non-scaling-stroke}
+.blaq-constellation .c-star{fill:#f1eee7;filter:drop-shadow(0 0 7px rgba(179,154,106,.72))}
+.blaq-constellation .c-star-soft{fill:#b39a6a;filter:drop-shadow(0 0 6px rgba(179,154,106,.58))}
+@media (prefers-reduced-motion:reduce){.blaq-constellation{opacity:.35}}
+
+
+.stroke-text {
+  -webkit-text-stroke: 1px rgba(241,238,231,.35);
+  color: transparent;
+}
+
+.cursor-none, .cursor-none * { cursor: none !important; }
+
+input:focus, button:focus-visible { outline: 2px solid #b39a6a; outline-offset: 3px; }
+
+
+html,body,#root{margin:0;min-height:100%;}
+*{box-sizing:border-box;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react,typescript">
+
+const Icon = ({children, size=20, strokeWidth=2, ...p}) =>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round"
+       strokeLinejoin="round" {...p}>{children}</svg>;
+const ArrowUpRight=({size,...p})=><Icon size={size} {...p}><path d="M7 17 17 7"/><path d="M7 7h10v10"/></Icon>;
+const Sparkles=({size,...p})=><Icon size={size} {...p}><path d="m12 3-1.5 5.5L5 10l5.5 1.5L12 17l1.5-5.5L19 10l-5.5-1.5L12 3Z"/><path d="m19 16-.7 2.3L16 19l2.3.7L19 22l.7-2.3L22 19l-2.3-.7L19 16Z"/></Icon>;
+const Heart=({size,...p})=><Icon size={size} {...p}><path d="M20.8 8.6c0 5.4-8.8 10.2-8.8 10.2S3.2 14 3.2 8.6A4.6 4.6 0 0 1 12 6.2a4.6 4.6 0 0 1 8.8 2.4Z"/></Icon>;
+const ShoppingBag=({size,...p})=><Icon size={size} {...p}><path d="M6 8h12l1 13H5L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></Icon>;
+const Menu=({size,...p})=><Icon size={size} {...p}><path d="M4 6h16M4 12h16M4 18h16"/></Icon>;
+const X=({size,...p})=><Icon size={size} {...p}><path d="m6 6 12 12M18 6 6 18"/></Icon>;
+const Play=({size,...p})=><Icon size={size} {...p}><path d="m8 5 11 7-11 7V5Z"/></Icon>;
+const Plus=({size,...p})=><Icon size={size} {...p}><path d="M12 5v14M5 12h14"/></Icon>;
+const Minus=({size,...p})=><Icon size={size} {...p}><path d="M5 12h14"/></Icon>;
+const Trash2=({size,...p})=><Icon size={size} {...p}><path d="M3 6h18M8 6V4h8v2M19 6l-1 15H6L5 6M10 11v6M14 11v6"/></Icon>;
+const MousePointer2=({size,...p})=><Icon size={size} {...p}><path d="m4 4 7 17 2.5-7.5L21 11 4 4Z"/></Icon>;
+const Compass=({size,...p})=><Icon size={size} {...p}><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></Icon>;
+const Layers=({size,...p})=><Icon size={size} {...p}><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></Icon>;
+const Box=({size,...p})=><Icon size={size} {...p}><path d="m21 8-9 5-9-5 9-5 9 5Z"/><path d="M3 8v9l9 5 9-5V8M12 13v9"/></Icon>;
+const Star=({size,...p})=><Icon size={size} {...p}><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></Icon>;
+
+
+
+type Piece = { id: number; name: string; price: number; cat: string; mark: string; blurb: string }
+const pieces: Piece[] = [
+  { id: 1, name: 'Pigeon Tee', price: 45000, cat: 'tops', mark: 'BLAQ', blurb: 'Soft-touch cotton, boxy cut.' },
+  { id: 2, name: 'Earth Hoodie', price: 85000, cat: 'hoodies', mark: 'EARTH', blurb: '800gsm loopback, gold embroidery.' },
+  { id: 3, name: 'Jorts', price: 65000, cat: 'bottoms', mark: 'JORTS', blurb: 'Wide, structured, pocket in every seam.' },
+  { id: 4, name: 'Nature Hoodie', price: 85000, cat: 'hoodies', mark: 'NATURE', blurb: 'Washed nylon fleece, earthy palette.' },
+  { id: 5, name: 'Water Hoodie', price: 85000, cat: 'hoodies', mark: 'WATER', blurb: 'Oversized, tonal pocket.' },
+  { id: 6, name: 'Cap', price: 40000, cat: 'caps', mark: 'B', blurb: 'Curved six-panel, embroidered mark.' },
+  { id: 7, name: 'Double-Hood', price: 95000, cat: 'hoodies', mark: 'BLAQ', blurb: 'The hero. Two layers, sculptural.' },
+  { id: 8, name: 'Essentials Tee', price: 55000, cat: 'tops', mark: 'BLAQ', blurb: 'Everyday silhouette, loud voice.' },
+]
+
+const money = (n: number) => '₦' + n.toLocaleString('en-NG')
+
+function App() {
+  const [filter, setFilter] = useState('all')
+  const [cart, setCart] = useState(2)
+  const [wished, setWished] = useState<number[]>([2])
+  const [tilt, setTilt] = useState({ x: -14, y: 10 })
+  const [cursor, setCursor] = useState({ x: -100, y: -100 })
+  const [toast, setToast] = useState('')
+  const heroRef = useRef<HTMLElement>(null)
+
+  const showToast = (t: string) => { setToast(t); window.setTimeout(() => setToast(''), 2200) }
+  const list = filter === 'all' ? pieces : pieces.filter((p) => p.cat === filter)
+
+  useEffect(() => {
+    const move = (e: MouseEvent) => setCursor({ x: e.clientX, y: e.clientY })
+    window.addEventListener('mousemove', move)
+    return () => window.removeEventListener('mousemove', move)
+  }, [])
+
+  const onTilt = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    const px = (e.clientX - r.left) / r.width - 0.5
+    const py = (e.clientY - r.top) / r.height - 0.5
+    setTilt({ x: py * -18, y: px * 22 })
+  }
+
+  const cats = [ ['all', 'All'], ['tops', 'Tees'], ['hoodies', 'Hoodies'], ['bottoms', 'Jorts'], ['caps', 'Caps'] ] as const
+
+  return (
+    <div className="grain min-h-screen selection:bg-moss">
+      {/* custom glow cursor */}
+      <div aria-hidden className="pointer-events-none fixed z-[90] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl transition-transform duration-150 ease-out"
+        style={{ left: cursor.x, top: cursor.y, background: 'radial-gradient(circle, rgba(179,154,106,.5), rgba(23,75,61,.25) 45%, transparent 70%)' }} />
+
+      {/* orbiting announcement */}
+      <div className="overflow-hidden bg-moss text-paper" role="note" aria-label="Announcement">
+        <div className="marquee-track py-3 text-[10px] font-bold tracking-[.35em]">
+          {Array.from({ length: 2 }).flatMap((_, i) => [0, 1, 2, 3].map((j) => (
+            <span key={`${i}-${j}`} className="mx-6 flex items-center gap-6"><Sparkles size={12} className="text-gold" /> Free Asaba delivery — new season — rule your generation — built in Asaba</span>
+          )))}
+        </div>
+      </div>
+
+      {/* header */}
+      <header className="glass sticky top-0 z-40 flex items-center justify-between border-b border-line px-5 py-4 md:px-10">
+        <a href="#home" className="flex items-center gap-4">
+          <div className="relative grid h-12 w-12 place-items-center rounded-full border border-ink font-serif text-2xl">
+            B
+            <span aria-hidden className="absolute -right-1 -top-1 grid size-4 place-items-center rounded-full bg-ink text-[10px] text-paper">✦</span>
+          </div>
+          <div>
+            <div className="font-display text-lg tracking-[.2em]">BLAQ</div>
+            <div className="text-[8px] font-bold tracking-[.3em] text-ink/50">EST. 2026 · ASABA</div>
+          </div>
+        </a>
+        <nav aria-label="Primary" className="hidden items-center gap-8 text-[11px] font-extrabold tracking-[.3em] md:flex">
+          {[['Shop', '#shop'], ['Story', '#story'], ['Collections', '#collections'], ['Contact', '#contact']].map(([l, href]) => (
+            <a key={l} href={href} className="group relative py-2">
+              <span className="absolute inset-x-0 -bottom-1 h-px scale-x-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-x-100" />
+              {l.toUpperCase()}
+            </a>
+          ))}
+        </nav>
+        <div className="flex items-center gap-3">
+          <a href="#shop" aria-label="Open bag" onClick={(e) => { e.preventDefault(); showToast('Bag — 2 pieces · ₦130,000 saved for you') }} className="grid size-11 place-items-center rounded-full border border-line transition hover:-translate-y-1 hover:shadow-xl">
+            <ShoppingBag size={19} />
+            <span className="absolute right-1 top-1 grid size-4 place-items-center rounded-full bg-ink text-[9px] text-paper">{cart}</span>
+          </a>
+          <button aria-label="Menu" onClick={() => showToast('Mobile menu is part of the full production build.')} className="grid size-11 place-items-center rounded-full bg-ink text-paper transition hover:-translate-y-1 md:hidden"><Menu size={19} /></button>
+        </div>
+      </header>
+
+      <main id="home">
+        {/* hero */}
+        <section ref={heroRef} aria-label="Hero" className="relative overflow-hidden bg-[#0b0b0b] text-paper">
+          <div aria-hidden className="absolute inset-0 [background:radial-gradient(circle_at_72%_38%,#3c3c3c_0,transparent_30%),linear-gradient(90deg,#050505_0%,#111_45%,#2a2a2a_100%)]" />
+          <div aria-hidden className="aurora-blob absolute -left-6 top-6 size-[420px] rounded-[46%_54%_60%_40%/50%_45%_55%_50%] opacity-40 blur-3xl" style={{ background: 'conic-gradient(from 40deg at 40% 40%, #174b3d, #b39a6a, #8eb7b0, #174b3d)' }} />
+          <div aria-hidden className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.06)_1px,transparent_1px)] [background-size:90px_90px]" />
+          <svg className="blaq-constellation" aria-hidden="true" viewBox="0 0 1000 650" preserveAspectRatio="none">
+            <g id="blaq-constellation-lines">
+              <line className="c-line" data-a="0" data-b="1"/>
+              <line className="c-line" data-a="1" data-b="2"/>
+              <line className="c-line" data-a="2" data-b="3"/>
+              <line className="c-line" data-a="3" data-b="4"/>
+              <line className="c-line" data-a="4" data-b="0"/>
+              <line className="c-line" data-a="0" data-b="2"/>
+              <line className="c-line" data-a="1" data-b="3"/>
+            </g>
+            <g id="blaq-constellation-stars">
+              <circle className="c-star" data-star="0" r="3.2"/>
+              <circle className="c-star-soft" data-star="1" r="2.4"/>
+              <circle className="c-star" data-star="2" r="3.6"/>
+              <circle className="c-star-soft" data-star="3" r="2.2"/>
+              <circle className="c-star" data-star="4" r="3"/>
+            </g>
+          </svg>
+
+
+          {/* spinning rings */}
+          <div aria-hidden className="ring-spin absolute right-[6%] top-[14%] hidden size-[270px] rounded-full border border-white/20 md:block">
+            <span className="absolute -top-2 left-1/2 text-gold">✦</span>
+          </div>
+          <div aria-hidden className="ring-spin-rev absolute right-[14%] top-[24%] hidden size-[150px] rounded-full border border-dashed border-gold/50 md:block" />
+
+          <div className="relative z-10 mx-auto max-w-6xl px-5 pb-24 pt-20 md:px-10 md:pt-28">
+            <p className="flex items-center gap-3 text-[10px] font-extrabold tracking-[.45em] text-[#d2bd94]"><Compass size={14} /> New season / Asaba, Nigeria</p>
+            <h1 className="mt-6 font-display text-[clamp(2.9rem,8.4vw,7rem)] leading-[.92] tracking-[-0.06em]">
+              Rule Your<br />
+              <em className="gold-shine font-serif italic font-light tracking-[-0.04em]">Generation.</em>
+            </h1>
+            <p className="mt-6 max-w-md text-sm leading-7 text-white/60 md:text-base">Premium streetwear for people who refuse to blend in. Distinctive silhouettes, considered details, visual identity made to move.</p>
+            <div className="mt-9 flex flex-wrap gap-4">
+              <a href="#shop" className="group flex items-center gap-3 rounded-full bg-paper px-7 py-4 text-[11px] font-extrabold tracking-[.25em] text-ink transition hover:-translate-y-2 hover:shadow-[0_28px_60px_-15px_rgba(179,154,106,.8)]">Shop new arrivals <ArrowUpRight className="transition-transform duration-500 group-hover:rotate-45" /></a>
+              <a href="#story" className="group flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-7 py-4 text-[11px] font-extrabold tracking-[.25em] backdrop-blur transition hover:-translate-y-2 hover:border-gold/70">
+                <Play size={14} className="text-gold transition group-hover:scale-110" /> Our story
+              </a>
+            </div>
+
+            <div className="mt-14 grid grid-cols-3 border-t border-white/10 pt-7" role="list" aria-label="Brand metrics">
+              {[['1K+', 'Pieces designed'], ['4.9★', 'Customer experience'], ['48H', 'Asaba delivery']].map(([v, l]) => (
+                <div key={l} role="listitem" className="border-l border-white/10 px-4 first:border-l-0 first:pl-0">
+                  <strong className="font-serif text-2xl italic md:text-4xl">{v}</strong>
+                  <small className="mt-2 block text-[9px] font-bold uppercase tracking-[.25em] text-white/40">{l}</small>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* floating ghost type */}
+          <div aria-hidden className="bob pointer-events-none absolute bottom-6 right-[-2%] font-display text-[clamp(6rem,16vw,15rem)] leading-none text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,.09)]">BLAQ</div>
+        </section>
+
+        {/* dual marquees */}
+        <div aria-hidden className="flex overflow-hidden border-y border-ink/5 bg-cream py-6">
+          <div className="marquee-track flex-shrink-0 text-[clamp(1.6rem,4vw,3.4rem)] font-display leading-none">
+            {Array.from({ length: 2 }).flatMap((_, i) => ['DON’T BLEND IN.', 'MAKE MOTION.', 'EARTH / WATER / NATURE.', 'WORN WORLDWIDE.'].map((t, j) => <span key={`${i}${j}`} className="mx-5 flex items-center gap-5">{t}<em className="font-serif italic text-gold">✦</em></span>))}
+          </div>
+        </div>
+
+        {/* story — tilt card */}
+        <section id="story" aria-label="Story" className="grid items-stretch gap-6 px-5 py-16 md:grid-cols-[1.05fr_.95fr] md:px-10 md:py-24">
+          <button type="button" onMouseMove={onTilt} onMouseLeave={() => setTilt({ x: -14, y: 10 })} onClick={() => showToast('Story 001 — Built in Asaba. Worn worldwide.')} aria-label="Open story panel, it tilts in 3D" className="tilt-scene group relative overflow-hidden rounded-[28px] bg-[#141414] p-7 text-left text-paper shadow-2xl md:min-h-[540px]">
+            <div aria-hidden className="absolute inset-0 transition duration-700 ease-out group-hover:scale-110 [background:radial-gradient(circle_at_35%_25%,rgba(142,183,176,.35),transparent_35%),linear-gradient(135deg,#101010,#2b2b2b)] [animation:drift_11s_ease-in-out_infinite_alternate]" />
+            <div aria-hidden className="aurora-blob absolute -right-8 -top-8 size-72 rounded-full opacity-30 blur-3xl" style={{ background: 'radial-gradient(circle,#b39a6a,transparent 65%)' }} />
+            <div className="tilt-card relative h-full w-full transition-transform duration-150" style={{ transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }}>
+              <div className="flex h-full flex-col justify-end rounded-[22px] border border-white/10 bg-white/5 p-6 backdrop-blur-xl md:p-10">
+                <p className="text-[10px] font-extrabold tracking-[.4em] text-gold">Story / 001</p>
+                <h2 className="mt-4 font-serif text-[clamp(2rem,4.2vw,4.2rem)] italic leading-[.95] tracking-[-0.04em]">Built in Asaba. Worn worldwide.</h2>
+                <p className="mt-5 max-w-md text-sm leading-6 text-white/60 md:text-base">We don’t make clothes that disappear into the crowd. Every mark is engineered to be recognized — and the web should feel the same way. Never flat. Never lifeless. Always moving.</p>
+                <span className="mt-8 inline-flex w-max items-center gap-3 rounded-full bg-paper px-6 py-4 text-[11px] font-extrabold tracking-[.25em] text-ink transition group-hover:gap-6"><span className="grid size-6 place-items-center rounded-full bg-ink text-paper transition-transform duration-500 group-hover:rotate-12"><Play size={10} /></span> Read the story</span>
+              </div>
+            </div>
+          </button>
+          <div className="flex flex-col justify-center gap-6">
+            <h2 className="font-display text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.02]">Motion is the material.</h2>
+            {[
+              { icon: Layers, n: '02', t: 'Tilt surfaces that answer your hand — every card in the room leans before you click it.' },
+              { icon: Box, n: '03', t: 'Physical depth: layered aurora fields, stacked rings, soft shadows you can feel at 90 frames per second.' },
+              { icon: Sparkles, n: '04', t: 'Live signals everywhere — humming cursor, ticking counters, drifting light, reverse-direction marquees.' },
+            ].map(({ icon: Icon, n, t }) => (
+              <button key={n} type="button" onClick={() => showToast(`Improvement ${n} — see the full playbook below.`)} onMouseEnter={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.transform = 'translateX(10px)' }} onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.transform = '' }} className="group flex items-start gap-5 rounded-[24px] border border-line bg-paper/90 p-6 text-left shadow-[0_30px_60px_-30px_rgba(12,12,12,.5)] backdrop-blur transition">
+                <span className="grid size-12 flex-shrink-0 place-items-center rounded-2xl bg-moss text-paper shadow-lg transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-110"><Icon size={20} /></span>
+                <span><span className="font-serif italic text-gold">{n} ·</span> <strong className="text-sm">{t}</strong></span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* collections */}
+        <section id="collections" aria-label="Collections" className="relative overflow-hidden bg-ink px-5 py-16 text-paper md:px-10 md:py-24">
+          <div aria-hidden className="aurora-blob absolute -left-10 bottom-0 size-[380px] rounded-full opacity-25 blur-3xl" style={{ background: 'conic-gradient(from 120deg, #174b3d, #8eb7b0, #b39a6a, #174b3d)' }} />
+          <div className="relative">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+              <h2 className="font-display text-[clamp(1.5rem,3.6vw,3rem)] leading-none tracking-[-0.05em]">Choose your statement.</h2>
+              <a href="#shop" className="flex items-center gap-2 text-[11px] font-extrabold tracking-[.3em] text-gold">Explore the world <ArrowUpRight size={16} className="transition-transform hover:rotate-45" /></a>
+            </div>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+              {[
+                { c: 'Tees', f: 'tops', g: 'linear-gradient(160deg,#0e0e0e,#4d4d4d)', s: '01' },
+                { c: 'Hoodies', f: 'hoodies', g: 'linear-gradient(160deg,#132e33,#5f8d86)', s: '02' },
+                { c: 'Jorts', f: 'bottoms', g: 'linear-gradient(160deg,#16211 3,#4f663e)'.replace(' 3', ''), s: '03' },
+                { c: 'Caps', f: 'caps', g: 'linear-gradient(160deg,#06465c,#66a1b4)', s: '04' },
+              ].map(({ c, f, g, s }, i) => (
+                <a key={f} href="#shop" aria-label={`Shop ${c}`} onClick={(e) => { e.preventDefault(); setFilter(f); document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }) }}
+                  className="group relative h-[300px] overflow-hidden rounded-[26px] p-6 shadow-xl outline-gold transition hover:-translate-y-3 hover:[transition-timing-function:cubic-bezier(.16,1,.3,1)]">
+                  <div aria-hidden className="absolute inset-0 transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-110 group-hover:rotate-2" style={{ background: g }} />
+                  <div aria-hidden className="absolute inset-0 [background:radial-gradient(circle_at_70%_22%,rgba(255,255,255,.35),transparent_32%)]" />
+                  <div className="relative flex h-full flex-col justify-between">
+                    <span className="w-max rounded-full border border-white/25 bg-black/25 px-4 py-2 text-[10px] font-extrabold tracking-[.3em] backdrop-blur">{s}</span>
+                    <h3 className="font-serif text-4xl italic leading-[.95] tracking-[-0.04em] md:text-5xl">{c}<span className="inline-block transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:rotate-12 group-hover:translate-x-2 group-hover:translate-y-2"> →</span></h3>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* shop */}
+        <section id="shop" aria-label="Shop" className="px-5 py-16 md:px-10 md:py-24">
+          <div className="mb-7 flex flex-wrap items-center justify-between gap-5">
+            <h2 className="font-display text-[clamp(1.2rem,2.6vw,2rem)] tracking-[-0.04em]">All products <span className="font-serif italic text-gold">— live.</span></h2>
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Filter">
+              {cats.map(([f, label]) => (
+                <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)} className={`rounded-full px-4 py-3 text-[10px] font-extrabold tracking-[.2em] transition-all ${filter === f ? 'bg-ink text-paper shadow-lg -translate-y-0.5' : 'border border-line bg-paper/70 text-ink/60 hover:-translate-y-0.5 hover:border-gold'}`}>{label.toUpperCase()}</button>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {list.map((p, i) => (
+              <article key={p.id} className="group relative overflow-hidden rounded-[26px] border border-line bg-white/80 shadow-[0_35px_70px_-35px_rgba(12,12,12,.55)] backdrop-blur transition hover:-translate-y-3" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }}>
+                <div className="relative h-[300px] overflow-hidden">
+                  <div aria-hidden className="absolute inset-0 transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105 group-hover:-rotate-1" style={{ background: p.cat === 'caps' ? 'linear-gradient(145deg,#06465c,#66a1b4)' : p.cat === 'hoodies' ? 'linear-gradient(145deg,#132e33,#5f8d86)' : p.cat === 'bottoms' ? 'linear-gradient(145deg,#162113,#4f663e)' : 'linear-gradient(145deg,#0e0e0e,#4d4d4d)' }} />
+                  <div aria-hidden className="absolute inset-0 [background:radial-gradient(circle_at_72%_20%,rgba(255,255,255,.28),transparent_34%)]" />
+                  <div className="relative grid h-full place-items-center">
+                    <h3 aria-label={p.name} className="px-4 text-center font-display text-3xl tracking-[.08em] text-paper drop-shadow-xl [text-shadow:0_18px_30px_rgba(0,0,0,.45)] transition duration-700 group-hover:scale-[1.04] group-hover:rotate-[-2deg]">{p.mark}</h3>
+                  </div>
+                  <button type="button" aria-label={`Wishlist ${p.name}`} onClick={() => { setWished((w) => (w.includes(p.id) ? w.filter((x) => x !== p.id) : [...w, p.id])); showToast(wished.includes(p.id) ? 'Removed from wishlist.' : 'Saved to wishlist.') }} className="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-white/90 shadow-lg backdrop-blur transition hover:scale-110"><Heart size={18} className={wished.includes(p.id) ? 'fill-[#a12620] text-[#a12620]' : 'text-ink'} /></button>
+                  <span className="absolute left-4 top-4 rounded-full bg-[#a12620] px-3 py-2 text-[9px] font-extrabold tracking-[.25em] text-white shadow-lg">NEW DROP</span>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-sm font-extrabold uppercase tracking-[.18em]">{p.name}</h3>
+                  <p className="mt-2 min-h-10 text-xs leading-5 text-ink/55">{p.blurb}</p>
+                  <div className="mt-5 flex items-center justify-between border-t border-line pt-5">
+                    <strong className="font-serif text-2xl italic tracking-[-0.03em]">{money(p.price)}</strong>
+                    <button type="button" onClick={() => { setCart((c) => c + 1); showToast(`Added ${p.name} to your bag.`) }} className="flex items-center gap-3 rounded-full bg-ink px-6 py-4 text-[10px] font-extrabold tracking-[.25em] text-paper transition hover:-translate-y-1 hover:shadow-[0_24px_50px_-20px_rgba(23,75,61,.9)]"><Plus size={14} /> Add bag</button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* reverse marquee */}
+        <div aria-hidden className="flex overflow-hidden border-y border-line bg-moss py-5 text-paper md:py-7">
+          <div className="marquee-track marquee-rev shrink-0 font-serif text-[clamp(1.2rem,2.6vw,2rem)] italic">
+            {Array.from({ length: 2 }).flatMap((_, i) => ['Motion is the material', 'Texture > Taste', 'Stillness is impossible', 'Never flat.'].map((t, j) => <span key={`${i}${j}`} className="mx-6 flex items-center gap-6">{t}<span className="text-gold">✦</span></span>))}
+          </div>
+        </div>
+
+        {/* improvement playbook */}
+        <section aria-label="How this build moves" className="grid gap-4 px-5 py-16 md:grid-cols-2 md:px-10 md:py-20 lg:grid-cols-4">
+          {[
+            { icon: MousePointer2, title: 'The humming cursor', body: 'A 220px gold/moss radial glow trails the pointer in real time — the whole page lights up where you are.', tag: 'Pointer events' },
+            { icon: Layers, title: 'Physical tilt', body: 'The story hero rotates in 3D perspective; every collection tile leans 2 degrees toward the cursor before you click.', tag: 'rotateX / rotateY / preserve-3d' },
+            { icon: Box, title: 'Layered 3D fields', body: 'Conic and radial aurora blobs drift and re-hue, stacked behind grids, rings, ghost type and blurred glass panels.', tag: 'aurora · grain · rings' },
+            { icon: Compass, title: 'Signal everywhere', body: 'Dual-direction marquees, spinning rings, bobbing ghost BLAQ, animated counters, shine on the italic headline, springs on every control.', tag: '14+ ambient systems' },
+          ].map(({ icon: Icon, title, body, tag }, i) => (
+            <a key={title} href="#contact" className="group flex flex-col gap-5 rounded-[28px] border border-line bg-cream p-7 shadow-[0_40px_80px_-40px_rgba(12,12,12,.6)] transition hover:-translate-y-3 hover:rotate-[-1deg]" aria-label={`Read ${title}`}>
+              <div className="flex items-center justify-between">
+                <span className="grid size-14 place-items-center rounded-[20px] bg-ink text-paper transition-transform duration-500 group-hover:rotate-12 group-hover:scale-105 group-hover:shadow-[0_20px_50px_-15px_rgba(179,154,106,.9)]"><Icon size={22} /></span>
+                <span className="rounded-full border border-gold/60 px-3 py-1 text-[9px] font-extrabold uppercase tracking-[.2em] text-gold">{tag}</span>
+              </div>
+              <h3 className="font-serif text-2xl italic leading-none tracking-[-0.03em]">{title}</h3>
+              <p className="text-sm leading-6 text-ink/60">{body}</p>
+              <span className="mt-auto inline-flex w-max items-center gap-2 pt-4 text-[11px] font-extrabold tracking-[.25em] text-moss">Try it <ArrowUpRight size={16} className="transition-transform duration-500 group-hover:rotate-90" /></span>
+              <span aria-hidden className="pointer-events-none absolute right-4 top-4 opacity-0 transition group-hover:opacity-100"><Star size={16} className="fill-gold text-gold" /></span>
+            </a>
+          ))}
+        </section>
+
+        {/* motion controls */}
+        <section aria-label="Motion controls" className="px-5 pb-20 md:px-10">
+          <a href="#shop" className="flex min-h-[110px] items-center justify-between gap-6 rounded-[32px] border border-white/10 bg-ink p-7 text-paper shadow-2xl md:p-10">
+            <div>
+              <h2 className="font-display text-2xl md:text-4xl">Less motion? Dial the whole room down.</h2>
+              <p className="mt-3 max-w-md text-sm leading-6 text-white/50">Every control on this build respects prefers-reduced-motion, and you can pause the hum right here — without killing the brand voice.</p>
+            </div>
+            <div className="flex flex-col items-center gap-3 md:flex-row">
+              <button type="button" onClick={(e) => { const el = e.currentTarget; el.setAttribute('aria-pressed', String(el.getAttribute('aria-pressed') === 'true')); showToast(el.getAttribute('aria-pressed') === 'true' ? 'Motion dial set to calm.' : 'Motion dial set to full.'); document.documentElement.style.setProperty('--motion', el.getAttribute('aria-pressed') === 'true' ? '0.25' : '1') }} aria-pressed="false" className="rounded-full border border-gold/50 px-7 py-5 text-[11px] font-extrabold tracking-[.25em] text-gold transition hover:-translate-y-1 hover:shadow-[0_25px_60px_-20px_rgba(179,154,106,.9)]">Dial: full motion</button>
+            </div>
+          </a>
+        </section>
+      </main>
+
+      {/* newsletter */}
+      <section aria-label="Newsletter" className="relative overflow-hidden bg-[#0b0b0b] px-5 py-16 text-center text-paper md:py-24">
+        <div aria-hidden className="aurora-blob absolute left-1/2 top-0 size-[420px] -translate-x-1/2 rounded-[50%] opacity-25 blur-3xl" style={{ background: 'conic-gradient(from 80deg,#174b3d,#b39a6a,#8eb7b0,#174b3d)' }} />
+        <div className="relative mx-auto max-w-2xl">
+          <p className="text-[10px] font-extrabold tracking-[.4em] text-gold">The blaq circle</p>
+          <h2 className="mt-4 font-display text-[clamp(1.6rem,4vw,3.2rem)] leading-[0.95]">Stay in motion.</h2>
+          <form className="mt-8 flex flex-col gap-3 sm:flex-row" onSubmit={(e) => { e.preventDefault(); showToast('Welcome to the circle — first drop is yours Friday.') }}>
+            <input required type="email" aria-label="Email address" placeholder="your@email.com" className="h-16 flex-1 rounded-full border border-white/15 bg-white/5 px-6 text-sm text-paper placeholder:text-white/35 backdrop-blur transition focus:border-gold" />
+            <button type="submit" className="h-16 rounded-full bg-paper px-9 text-[11px] font-extrabold tracking-[.25em] text-ink transition hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_rgba(241,238,231,.7)]">Subscribe</button>
+          </form>
+        </div>
+      </section>
+
+      {/* footer */}
+      <footer id="contact" className="border-t border-white/5 bg-[#0b0b0b] px-5 pb-10 pt-10 text-paper md:px-10">
+        <div className="flex flex-wrap items-center justify-between gap-6 text-[11px] font-extrabold tracking-[.25em] text-white/40">
+          <span>© 2026 BLAQ — Rule your generation</span>
+          <div className="flex gap-4">
+            {['Shipping', 'Returns', 'FAQ', 'Contact'].map((x) => <a key={x} href="#home" onClick={(e) => { e.preventDefault(); showToast(`${x} — production build opens this sheet in context.`) }} className="rounded-full border border-white/10 px-4 py-3 transition hover:-translate-y-1 hover:border-gold/60 hover:text-gold">{x.toUpperCase()}</a>)}
+          </div>
+          <span className="font-serif italic tracking-normal text-gold">Asaba · Delta State · Nigeria</span>
+        </div>
+      </footer>
+
+      {/* toast */}
+      <div role="status" aria-live="polite" className={`pointer-events-none fixed bottom-6 left-1/2 z-[80] -translate-x-1/2 rounded-full border border-gold/40 bg-ink/95 px-6 py-4 text-xs font-bold tracking-[.2em] text-paper shadow-2xl backdrop-blur transition-all duration-500 ${toast ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>{toast || '·'}</div>
+    </div>
+  )
+}
+
+
+
+(function initBlaqLivingConstellation(){
+  const svg=document.querySelector('.blaq-constellation');
+  if(!svg)return;
+  const stars=[...svg.querySelectorAll('[data-star]')];
+  const lines=[...svg.querySelectorAll('[data-a][data-b]')];
+  const base=[
+    {x:690,y:145,ax:42,ay:30,s:.00038,p:.2},
+    {x:785,y:210,ax:58,ay:34,s:.00031,p:1.7},
+    {x:860,y:135,ax:48,ay:42,s:.00034,p:3.1},
+    {x:820,y:315,ax:65,ay:48,s:.00027,p:4.4},
+    {x:700,y:285,ax:52,ay:38,s:.00036,p:5.6}
+  ];
+  function point(i,t){
+    const b=base[i];
+    return {
+      x:b.x+Math.sin(t*b.s+b.p)*b.ax+Math.sin(t*b.s*.53+b.p*1.9)*b.ax*.34,
+      y:b.y+Math.cos(t*b.s*.91+b.p)*b.ay+Math.sin(t*b.s*.47+b.p*.7)*b.ay*.38
+    };
+  }
+  function frame(t){
+    const pts=base.map((_,i)=>point(i,t));
+    stars.forEach((el,i)=>{const p=pts[i];el.setAttribute('cx',p.x);el.setAttribute('cy',p.y)});
+    lines.forEach(el=>{
+      const a=pts[+el.dataset.a],b=pts[+el.dataset.b];
+      el.setAttribute('x1',a.x);el.setAttribute('y1',a.y);
+      el.setAttribute('x2',b.x);el.setAttribute('y2',b.y);
+    });
+    requestAnimationFrame(frame);
+  }
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(frame);
+  else frame(0);
+})();
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+</script>
+</body>
+</html>
